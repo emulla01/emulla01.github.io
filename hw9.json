@@ -1,62 +1,62 @@
 [
-{
+    {
 	"name": "Don't Stop Believing",
 	"artist": "Journey",
 	"genre(s)": ["Pop", "Rock"],
 	"Year Released": "1981",
-},
-{
+    },
+    {
 	"name": "Juice",
 	"artist": "Lizzo",
 	"genre(s)": ["Pop", "Contemporary"],
 	"Year Released": "2019",
-},
-{
+    },
+    {
 	"name": "Gin n Juice",
 	"artist": "Snoop Dog",
 	"genre(s)": ["Hip Hop", "Rap"],
 	"Year Released": "1993",
-},
-{
+    },
+    {
 	"name": "Brown Eyed Girl",
 	"artist": "Van Morrison",
 	"genre(s)": ["Pop", "Rock"],
 	"Year Released": "1967",
-},
-{
+    },
+    {
 	"name": "I Want You Back",
 	"artist": "Jackson 5",
 	"genre(s)": ["Pop", "MoTown"],
 	"Year Released": "1969",
-},
-{
+    },
+    {
 	"name": "Fly Me To The Moon",
 	"artist": "Frank Sinatra",
 	"genre(s)": ["Ballad"],
 	"Year Released": "1964",
-},
-{
+    },
+    {
 	"name": "Dynamite",
 	"artist": "Taio Cruz",
 	"genre(s)": ["Pop", "Hip Hop"],
 	"Year Released": "2009",
-},
-{
+    },
+    {
 	"name": "Single Ladies",
 	"artist": "Beyonce",
 	"genre(s)": ["Pop", "Contemporary"],
 	"Year Released": "2008",
-},
-{
+    },
+    {
 	"name": "In My Life",
 	"artist": "Beatles",
 	"genre(s)": ["Ballad", "Beatles"],
 	"Year Released": "1965",
-},
-{
+    },
+    {
 	"name": "September",
 	"artist": "Earth, Wind, and Fire",
 	"genre(s)": ["Pop", "Disco"],
 	"Year Released": "1978",
-}
+    }
 ]
