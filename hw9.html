@@ -1,0 +1,91 @@
+<!doctype html>
+<html>
+<head>
+	<title>SetList</title>
+	<meta charset="utf-8"/>
+	<script>
+    function readIn(f)
+		{
+			request = new XMLHttpRequest();
+			request.open("GET", "https://emulla01.github.io/hw9.json", true);
+			request.onreadystatechange = function()
+			{
+				if (request.readyState == 4 && request.status == 200) 
+				{
+					document.getElementById("hello").innerHTML = "Error";
+					originalMessage = request.responseText;
+					printOut = originalMessage;
+					message = JSON.parse(originalMessage);
+					document.getElementById("hello").innerHTML = printOut;
+					console.log(message.length);
+					console.log(message[0].title);
+					if(f == true)
+					{
+						filter=document.getElementById("genre").value;
+						structure(message, filter);
+					}
+					else 
+					{
+						structure(message, "none");	
+					}
+				}
+				else {
+					document.getElementById("hello").innerHTML = "Error";
+				}
+			}
+			request.send();
+		}
+		function structure(message, filter)
+		{
+			var str = "";
+			console.log(message.length);
+			for (i = 0; i < message.length; i++)
+			{
+				f = false;
+				temp = "";
+				temp += "</br>Title: " + message[i].title + "</br>Artist: " + 
+				message[i].artist + "</br>Year Released: " + message[i].year + 
+				"</br>Genre: ";
+				for (j = 0; j < message[i].genre.length; j++)
+				{
+					temp += message[i].genre[j] + ", ";
+					if (message[i].genre[j] == filter || filter == "none")
+					{
+						f = true;
+					}
+				}
+				temp += "</br>"
+				if(f)
+				{
+					str += temp;
+				}
+			}
+			document.getElementById("new").innerHTML = str;
+		}
+  </script>
+</head>
+<body onload="readIn(false)">
+  <h1>My Set</h1>
+	<div id="hello"></div>
+	<br/>
+	<h2>Structured Set List</h2>
+	<div id="new"></div>
+	<br/>
+	<h2>Filtered Songs</h2>
+	<form>
+		<select id="genre" name="genre">
+			<option value="Pop">Pop</option>
+			<option value="Contemporary">Contemporary</option>
+			<option value="Hip Hop">Hip Hop</option>
+			<option value="Rap">Rap</option>
+			<option value="Rock">Rock</option>
+			<option value="Ballad">Ballad</option>
+			<option value="Beatles">Beatles</option>
+			<option value="Motown">Motown</option>
+      <option value="Disco">Disco</option>
+			<option value="none">none</option>
+		</select>
+		<button type="button" onclick="readIn(true)">Filter</button>
+	</form>
+</body>
+</html>
