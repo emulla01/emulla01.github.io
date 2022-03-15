@@ -1,0 +1,75 @@
+<!doctype html>
+<html>
+<head>
+	<title>SetList</title>
+	<meta charset="utf-8"/>
+	<script>
+    function readIn1()
+    {
+			request = new XMLHttpRequest();
+			console.log("1: created request");
+			request.open("GET", "https://openlibrary.org/authors/OL23919A.json", true);
+			console.log("2: open success");
+			request.onreadystatechange = function()
+			{
+				console.log("3:  event fired");
+				if (request.readyState == 4 && request.status == 200) 
+				{
+					console.log("5:  data is ready");
+					theData = request.responseText;
+					data = JSON.parse(theData);
+					str = "Name of author searched: " + data.name + "</br></br>";
+					str += "Bio: " + data.bio + "</br></br>";
+					str += "Birthday: " + data.birth_date + "</br></br>";
+					str += "Website: " + data.links[0].url;
+					document.getElementById("data").innerHTML = str;
+				}
+			}
+			request.send();
+    }
+		function readIn2()
+		{
+			res = fetch("https://openlibrary.org/authors/OL23919A.json")
+			.then(res => res.text())
+			.then (data => 
+        {
+          data = JSON.parse(data)
+					str = "Name of author searched: " + data.name + "</br></br>";
+					str += "Bio: " + data.bio + "</br></br>";
+					str += "Birthday: " + data.birth_date + "</br></br>";
+					str += "Website: " + data.links[0].url;
+					document.getElementById("pretty").innerHTML = str;
+        })
+		}
+		function description()
+		{
+			des = "The API from Onelibrary lets users search up authors by an id code";
+			des +=" or name and helps users collect information on the author like their";
+			des +=" bio, website, works, birthday, and other important information.</br></br>";
+			des +=" I found this website on github.com/public-apis/public-apis. </br></br>";
+			des +="I used the optionto open a request using ajax to access the data"; 
+			des += " and display it on the website. I then used fetch to retrieve the";
+			des += " information and display it on my website with out using a http request."
+			des += "</br></br> An application for this is a local library website if";
+			des += " someone wanted to search a particular author or this can also be";
+			des += " used for a school website so students can search book authors";
+			document.getElementById("questions").innerHTML = des;
+		}
+  </script>
+</head>
+<body>
+  <h1>Author Info Using Get</h1>
+  <div id="data"></div>
+	<input type="button" name="button1" value="Get" onclick = "readIn1()"
+	id="button1">
+	<br/>
+  <h2>Author Info Using Fetch</h2>
+  <div id="pretty"></div>
+	<input type="button" name="button2" value="Fetch" onclick = "readIn2()"
+	id="button2">
+	<h2>Description</h2>
+	<div id="questions"></div>
+	<input type="button" name="button3" value="Description" onclick = "description()"
+	id="button3">
+</body>
+</html>
