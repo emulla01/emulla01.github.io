@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Jade Delight</title>
+<style>
+body {
+	text-align:center;
+}
+table {
+	width: 100%;
+}
+</style>
+<script>
+function validate()
+{
+	lastName = document.forms[0].lname.value;
+	console.log(lastName);
+	phoneNumber = document.forms[0].phone.value;
+	console.log(phoneNumber);
+	if(!valPhone(phoneNumber))
+	{
+		alert("Please enter a valid phone number.");
+		return false;
+	}
+	if(lastName == "")
+	{
+		alert("Please enter a last name");
+		return false;
+	}
+	if (document.forms[0].p_or_d[1].checked == true)
+	{ 
+		streetInput = document.forms[0].street.value;
+		cityInput = document.forms[0].city.value;
+		if (streetInput == ""){
+			alert("Please enter a valid street address"); 
+		}
+		if (cityInput == ""){
+			alert("Please enter a valid city address"); 
+		}
+		return false;
+	}
+	if(document.getElementById("total").value == "" || 
+	document.getElementById("total").value == 0)
+	{
+		alert("Please order something");
+		return false;
+	}
+	 
+		printOut();
+		return true;
+}	
+function valPhone(phoneN)
+{
+	if(/^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/.test(phoneN) == true)
+	{
+		return true;
+	}
+	else
+	{
+		return false;
+	}
+}
+function printOut()
+{
+	d1 = new Date();
+	d2 = new Date();
+	pickOr = "";
+	if (document.forms[0].p_or_d[0].checked == true)
+	{
+		d2.setMinutes(d1.getMinutes()+15); 
+		pickOr = "pickup";
+	}
+	else if(document.forms[0].p_or_d[1].checked == true)
+	{
+		d2.setMinutes(d1.getMinutes()+30); 
+		pickOr = "delivery";
+	}
+	console.log(pickOr);
+	order = "";
+	for (i=0; i< menuItems.length; i++)
+	{
+		var num = document.getElementsByName("quan"+i)[0].selectedIndex;
+		var name = menuItems[i].name;
+		var cost = document.getElementsByName("cost")[i].value;
+		if (cost == "")
+		{
+			cost = 0;
+		}
+		order += "Item: " + num + " " + name + " Cost: $" + cost + "<br>";
+	}
+	total = document.getElementById("total").value;
+	tax = document.getElementById("tax").value;
+	if (total == "")
+	{
+		total = 0;
+	}
+	myWindow = window.open("blank");
+	myWindow.document.write("Thank you so much for ordering with us today!" + "</br>" 
+	+ "These are the items you ordered: " + "<br>" + order + "<br>" + "Tax: $" + 
+	tax + "<br>" + " This is your total: $" + 
+  total + "<br>" + "Your " + pickOr + " order will be ready in " + d2);
+	myWindow.focus();
+}
+
+</script>
+</head>
+
+<body>
+<script>
+
+function MenuItem(name, cost)
+{
+	this.name = name;
+	this.cost=cost;
+}
+
+menuItems = new Array(
+	new MenuItem("Chicken Chop Suey", 4.5),
+	new MenuItem("Sweet and Sour Pork", 6.25),
+	new MenuItem("Shrimp Lo Mein", 6.25),
+	new MenuItem("Moo Shi Chicken", 7.5),
+	new MenuItem("Fried Rice", 2.85)
+);
+
+function makeSelect(name, minRange, maxRange)
+{
+	var t= "";
+	t = "<select name='" + name + "' size='1'>";
+	for (j=minRange; j<=maxRange; j++)
+	   t += "<option>" + j + "</option>";
+	t+= "</select>"; 
+	console.log(t);
+	return t;
+}
+
+function td(content, className="")
+{
+	return "<td class = '" + className + "'>" + content + "</td>";
+}
+
+function ending()
+{
+	total = 0;
+	for(i = 0; i < menuItems.length; i++)
+	{
+		ind_total = Number(document.getElementsByName("cost")[i].value);
+		total += ind_total;
+	}
+	tax = Number(total) * 0.0625;
+	new_total = Number(total) + tax;
+	console.log(total);
+	console.log(tax);
+	console.log(new_total);
+	document.getElementById("subtotal").value = Number(total).toFixed(2);
+	document.getElementById("tax").value = Number(tax).toFixed(2);
+	document.getElementById("total").value = Number(new_total).toFixed(2);
+}
+
+</script>
+
+<h1>Jade Delight</h1>
+<script src= "https://code.jquery.com/jquery-1.12.4.min.js"> </script>
+<script>
+    $(document).ready(function() {
+			$(".address").hide();
+				$('input[name="p_or_d"]').click(function() {
+						inputValue = $('input[name="p_or_d"]:checked').val();
+						if (inputValue == "delivery")
+						{
+							$(".address").show();
+						}
+						else
+						{
+							$(".address").hide();
+						}
+						//var inputValue = $(this).attr("value");
+						//var targetBox = $("." + inputValue);
+						//$(".selectt").not(targetBox).hide();
+						//$(targetBox).show();
+				});
+		});
+</script>
+<form onsubmit="return validate()">
+
+<p class="userInfo"><label>First Name:</label> <input type="text"  name='fname' /></p>
+<p class="userInfo"><label>Last Name*</label>:  <input type="text"  name='lname' /></p>
+<p class="userInfo address"><label>Street*</label>: <input type="text" name='street' /></p>
+<p class="userInfo address"><label>City*</label>: <input type="text" name='city' /></p>
+<p class="userInfo"><label>Phone*</label>: <input type="text"  name='phone' /></p>
+<p> 
+	<input type="radio"  name="p_or_d" value = "pickup" checked="checked"/>Pickup  
+	<input type="radio"  name='p_or_d' value = 'delivery'/>
+	Delivery
+</p>
+<table border="0" cellpadding="3">
+  <tr>
+    <th>Select Item</th>
+    <th>Item Name</th>
+    <th>Cost Each</th>
+    <th>Total Cost</th>
+  </tr>
+<script>
+
+  var s = "";
+  for (i=0; i< menuItems.length; i++)
+  {
+	  s += "<tr>";
+	  s += td(makeSelect("quan" + i, 0, 10),"selectQuantity");
+	  s += td(menuItems[i].name, "itemName");
+	  s += td("$" +menuItems[i].cost.toFixed(2), "cost");
+	  s += td("$<input type='text' name='cost'/>", "totalCost");
+	  s+= "</tr>";
+  }
+  document.writeln(s);
+</script>
+</table>
+<p class="subtotal totalSection"><label>Subtotal</label>: 
+   $ <input type="text"  name='subtotal' id="subtotal" />
+</p>
+<p class="tax totalSection"><label>Mass tax 6.25%:</label>
+  $ <input type="text"  name='tax' id="tax" />
+</p>
+<p class="total totalSection"><label>Total:</label> $ <input type="text"  name='total' id="total" />
+</p>
+
+<input type="submit" value="Submit Value" />
+
+</form>
+<script language="javascript">
+	subtotal_temp=0, tax_temp=0, total_temp=0;
+	console.log(document.getElementsByName("quan"+0)[0]);
+
+	for (i=0; i< menuItems.length; i++){
+		document.getElementsByName("quan"+i)[0].onchange = function() {
+			name=this.name;
+			i = name.substring(4);
+			x = document.getElementsByName("quan"+i)[0].selectedIndex; 
+			price_each = menuItems[i].cost.toFixed(2);
+			document.getElementsByName("cost")[i].value = (x*price_each).toFixed(2);
+			
+			ending();
+		}
+	}
+</script>
+</body>
+</html>
